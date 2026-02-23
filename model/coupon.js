@@ -10,9 +10,16 @@ const couponSchema = new mongoose.Schema({
     required: [true,'please enter discountValue']
   },
   expiryDate: { type: Date, default : Date.now,
+<<<<<<< HEAD
   required: [true ,'please enter date']
  },
   isActive: { type: Boolean, default: true }
 }, { timestamps: true });
+=======
+ 
+ },
+  isActive: { type: Boolean, default: true }
+});
+>>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
 
 module.exports = mongoose.model("Coupon", couponSchema);

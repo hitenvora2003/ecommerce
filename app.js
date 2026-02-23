@@ -14,7 +14,10 @@ var payment = require('./routes/payment');
 var product = require('./routes/product');
 var riview = require('./routes/review')
 var wishlist = require('./routes/wishlist')
+<<<<<<< HEAD
 const mainRoutes = require("./routes/mainroutes");
+=======
+>>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
 
 const mongoose = require('mongoose');
 const { error } = require('console');
@@ -50,10 +53,13 @@ app.use('/payment', payment);
 app.use('/product', product);
 app.use('/review', riview);
 app.use('/wishlist', wishlist);
+<<<<<<< HEAD
 app.use('/api', mainRoutes);
 
 
 
+=======
+>>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

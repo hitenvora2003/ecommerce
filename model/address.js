@@ -19,14 +19,27 @@ const addressSchema = new mongoose.Schema({
   },
   country: {
     type : String,
+<<<<<<< HEAD
     required : [true, "Please Enter your state"]
+=======
+    required : [true, "Please Enter your country"]
+>>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
   },
   pincode: {
     type : String,
     required : [true, "Please Enter your pincode"]
   },
+<<<<<<< HEAD
   phone: String,
   isDefault: { type: Boolean, default: false }
 },{ timestamps: true });
+=======
+  phone: {
+    type : String,
+    required : [true, "Please Enter your phone."]
+  },
+  isDefault: { type: Boolean, default: false }
+});
+>>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
 
 module.exports = mongoose.model("Address", addressSchema);

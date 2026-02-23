@@ -79,6 +79,8 @@ exports.createdata = async (req, res) => {
     // 🔐 Password Validation End
 
     // 🔒 Hash password
+    console.log("pppppp====",passdata);
+
       passdata.password = await bcrypt.hash(passdata.password, 10)
     
     // passdata.image = req.file.filename
@@ -115,15 +117,25 @@ exports.login = async (req, res) => {
     const emailVerify = await user.findOne({
       
     $or: [
+<<<<<<< HEAD
      { username: passdata.username },
      { email: passdata.email },
    
+=======
+    { email: passdata.email },
+    { username: passdata.username },
+    { mobile: passdata.mobile },
+>>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
   ]
     
     });
     console.log(emailVerify);
 
+<<<<<<< HEAD
     if (!emailVerify) throw new Error("Invalid username or email ");
+=======
+    if (!emailVerify) throw new Error("Invalid name or email or mobile ");
+>>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
 
     const passVerify = await bcrypt.compare(
       passdata.password,
@@ -141,7 +153,11 @@ exports.login = async (req, res) => {
       data : emailVerify,token
     });
   } catch (error) {
+<<<<<<< HEAD
     res.status(500).json({
+=======
+    res.status(404).json({
+>>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
       status: "failed",
       message: error.message
     });

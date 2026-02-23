@@ -4,7 +4,9 @@ const user = require('../model/payment')
 
 exports.pageviews = async (req, res) => {
   try {
-    const alldata = await user.find().populate([{path : 'order', populate : [{path : 'user'},{path : 'products.product',populate : {path : 'category'}}]}]).populate('user')
+    
+    const alldata = await user.find().populate([{path : 'order', populate : [{path : 'user'},{path : 'products.product',populate : {path : 'category'}}]}, {path : 'user'}])
+
     console.log(alldata)
     res.status(200).json({
       status: 'success',
