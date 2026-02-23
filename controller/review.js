@@ -14,9 +14,9 @@ exports.pageviews = async (req, res) => {
 
   }
   catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       status: 'failed',
-      message: error,
+      message: error.message
 
     })
   }
@@ -35,7 +35,7 @@ exports.createdata = async (req, res) => {
 
   }
   catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       status: 'fail',
       message: error.message
     })

@@ -39,39 +39,39 @@ exports.pageview = async (req, res) => {
   catch (error) {
     res.status(500).json({
       status: 'Fail',
-      message: error
+      message: error.message
     })
   }
 }
 exports.createdata = async (req, res) => {
   try {
     let passdata = req.body
-    let password = passdata.password;   
-    console.log("pppppp====",passdata);
-        // 🔐 Password Validation Start
+    let password = passdata.password;
+    console.log("pppppp====", passdata);
+    // 🔐 Password Validation Start
     if (password.length < 8) {
-      return res.status(400).json({
+      return res.status(401).json({
         status: "fail",
         message: "Password must be at least 8 characters"
       });
     }
 
     if (!/[A-Z]/.test(password)) {
-      return res.status(400).json({
+      return res.status(401).json({
         status: "fail",
         message: "Password must contain uppercase letter"
       });
     }
 
     if (!/[a-z]/.test(password)) {
-      return res.status(400).json({
+      return res.status(401).json({
         status: "fail",
         message: "Password must contain lowercase letter"
       });
     }
 
     if (!/[0-9]/.test(password)) {
-      return res.status(400).json({
+      return res.status(401).json({
         status: "fail",
         message: "Password must contain number"
       });
@@ -79,21 +79,21 @@ exports.createdata = async (req, res) => {
     // 🔐 Password Validation End
 
     // 🔒 Hash password
-    console.log("pppppp====",passdata);
+    console.log("pppppp====", passdata);
 
-      passdata.password = await bcrypt.hash(passdata.password, 10)
-    
+    passdata.password = await bcrypt.hash(passdata.password, 10)
+
     // passdata.image = req.file.filename
-   
+
     sendMail(passdata.email)
-    console.log("============",passdata);
+    console.log("============", passdata);
     var datas = await user.create(passdata)
-  
+
     console.log(datas);
 
-    
-   
-    
+
+
+
 
     res.status(200).json({
       status: 'success',
@@ -115,27 +115,19 @@ exports.login = async (req, res) => {
 
     const passdata = req.body
     const emailVerify = await user.findOne({
-      
-    $or: [
-<<<<<<< HEAD
-     { username: passdata.username },
-     { email: passdata.email },
-   
-=======
-    { email: passdata.email },
-    { username: passdata.username },
-    { mobile: passdata.mobile },
->>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
-  ]
-    
+
+      $or: [
+
+        { username: passdata.username },
+        { email: passdata.email },
+
+
+      ]
+
     });
     console.log(emailVerify);
-
-<<<<<<< HEAD
     if (!emailVerify) throw new Error("Invalid username or email ");
-=======
-    if (!emailVerify) throw new Error("Invalid name or email or mobile ");
->>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
+
 
     const passVerify = await bcrypt.compare(
       passdata.password,
@@ -145,19 +137,15 @@ exports.login = async (req, res) => {
 
     if (!passVerify) throw new Error("Invalid password");
 
-    const token = jwt.sign({id : emailVerify._id},'ten')
+    const token = jwt.sign({ id: emailVerify._id }, 'ten')
 
     res.status(200).json({
       status: "success",
       message: "Login user Success",
-      data : emailVerify,token
+      data: emailVerify, token
     });
   } catch (error) {
-<<<<<<< HEAD
     res.status(500).json({
-=======
-    res.status(404).json({
->>>>>>> bd3a73e1234e6cdc52754e0c571ec5cf7993bad1
       status: "failed",
       message: error.message
     });

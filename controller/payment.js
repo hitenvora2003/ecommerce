@@ -4,7 +4,7 @@ const user = require('../model/payment')
 
 exports.pageviews = async (req, res) => {
   try {
-    
+
     const alldata = await user.find().populate([{path : 'order', populate : [{path : 'user'},{path : 'products.product',populate : {path : 'category'}}]}, {path : 'user'}])
 
     console.log(alldata)
@@ -16,9 +16,9 @@ exports.pageviews = async (req, res) => {
 
   }
   catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       status: 'failed',
-      message: error,
+      message: error.message
 
     })
   }
@@ -37,7 +37,7 @@ exports.createdata = async (req, res) => {
 
   }
   catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       status: 'fail',
       message: error.message
     })
@@ -55,9 +55,9 @@ exports.deleteData = async (req, res) => {
     })
   }
   catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       status: 'fail',
-      message: error
+      message: error.message
     })
   }
 }
@@ -75,9 +75,9 @@ exports.updatedata = async (req, res) => {
     })
   }
   catch (error) {
-    res.status(400).json({
+    res.status(500).json({
       status: 'failed',
-      message: error
+      message: error.message
     })
   }
 }
