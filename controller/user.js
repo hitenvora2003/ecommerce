@@ -48,6 +48,7 @@ exports.createdata = async (req, res) => {
     let passdata = req.body
     let password = passdata.password;
     console.log("pppppp====", passdata);
+    
     // 🔐 Password Validation Start
     if (password.length < 8) {
       return res.status(401).json({

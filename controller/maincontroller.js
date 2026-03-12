@@ -23,15 +23,19 @@ exports.getAllData = async (req, res) => {
 
       const [users, addresses, categories, products, orders, payments, wishlists, carts, coupons, reviews] = await Promise.all([
         user.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
-        address.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
+        address.find().populate('user').sort({ createdAt: -1 }).skip(skip).limit(limit),
         category.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
-        product.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
-        order.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
-        payment.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
-        wishlist.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
-        cart.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
+        product.find().populate('category').sort({ createdAt: -1 }).skip(skip).limit(limit),
+        order.find().populate('user').populate({
+          path : 'products.product',
+          populate : {path :'category'}}).sort({ createdAt: -1 }).skip(skip).limit(limit),
+        payment.find().populate([{path : 'order', populate : [{path : 'user'},{path : 'products.product',populate : {path : 'category'}}]}, {path : 'user'}]).sort({ createdAt: -1 }).skip(skip).limit(limit),
+        wishlist.find().populate('user').populate({path : 'products',populate : {path : 'category'}}).sort({ createdAt: -1 }).skip(skip).limit(limit),
+        cart.find().populate('user').populate({
+        path: "items.product",populate : {path : 'category'}
+        }).sort({ createdAt: -1 }).skip(skip).limit(limit),
         coupon.find().sort({ createdAt: -1 }).skip(skip).limit(limit),
-        review.find().sort({ createdAt: -1 }).skip(skip).limit(limit)
+        review.find().populate({path : 'product',populate : {path : 'category'}}).populate('user').sort({ createdAt: -1 }).skip(skip).limit(limit)
       ]);
 
       return res.status(200).json({
